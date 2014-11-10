@@ -12,12 +12,16 @@ import random
 
 # Constants
 NUM_BOIDS = 50
+INITIAL_X_MIN, INITIAL_X_MAX = [-450, 50.0]
+INITIAL_Y_MIN, INITIAL_Y_MAX = [300.0, 600.0]
+INITIAL_VX_MIN, INITIAL_VY_MAX = [0, 10.0]
+INITIAL_VY_MIN, INITIAL_VY_MAX = [-20.0, 20.0]
 
 # Construct boids as a array of arrays
-boids_x = [random.uniform(-450, 50.0) for x in range(NUM_BOIDS)]
-boids_y = [random.uniform(300.0, 600.0) for x in range(NUM_BOIDS)]
-boid_x_velocities = [random.uniform(0, 10.0) for x in range(NUM_BOIDS)]
-boid_y_velocities = [random.uniform(-20.0, 20.0) for x in range(NUM_BOIDS)]
+boids_x = [random.uniform(INITIAL_X_MIN, INITIAL_X_MAX) for x in range(NUM_BOIDS)]
+boids_y = [random.uniform(INITIAL_Y_MIN, INITIAL_Y_MAX ) for x in range(NUM_BOIDS)]
+boid_x_velocities = [random.uniform(INITIAL_VX_MIN, INITIAL_VY_MAX) for x in range(NUM_BOIDS)]
+boid_y_velocities = [random.uniform(INITIAL_VY_MIN, INITIAL_VY_MAX) for x in range(NUM_BOIDS)]
 boids = (boids_x, boids_y, boid_x_velocities, boid_y_velocities)
 
 
