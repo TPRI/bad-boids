@@ -13,20 +13,15 @@ import os
 import yaml
 
 # Load initial config from initial_config.yml
-INITIAL_CONFIG = yaml.load(open(os.path.join(os.path.dirname(__file__), 'initial_config.yml')))
+INIT_CONFIG = yaml.load(open(os.path.join(os.path.dirname(__file__), 'initial_config.yml')))
 
-NUM_BOIDS = INITIAL_CONFIG["num_boids"]
-
-INITIAL_X_MIN, INITIAL_X_MAX = INITIAL_CONFIG["initial_x_min"], INITIAL_CONFIG["initial_x_min"]
-INITIAL_Y_MIN, INITIAL_Y_MAX = INITIAL_CONFIG["initial_y_min"], INITIAL_CONFIG["initial_y_min"]
-INITIAL_VX_MIN, INITIAL_VY_MAX = INITIAL_CONFIG["initial_vx_min"], INITIAL_CONFIG["initial_vx_min"]
-INITIAL_VY_MIN, INITIAL_VY_MAX = INITIAL_CONFIG["initial_vy_min"], INITIAL_CONFIG["initial_vy_min"]
+NUM_BOIDS = INIT_CONFIG["num_boids"]
 
 # Construct boids as a array of arrays
-boids_x = [random.uniform(INITIAL_X_MIN, INITIAL_X_MAX) for x in range(NUM_BOIDS)]
-boids_y = [random.uniform(INITIAL_Y_MIN, INITIAL_Y_MAX ) for x in range(NUM_BOIDS)]
-boid_x_velocities = [random.uniform(INITIAL_VX_MIN, INITIAL_VY_MAX) for x in range(NUM_BOIDS)]
-boid_y_velocities = [random.uniform(INITIAL_VY_MIN, INITIAL_VY_MAX) for x in range(NUM_BOIDS)]
+boids_x = [random.uniform(INIT_CONFIG["x_min"], INIT_CONFIG["x_min"]) for x in range(NUM_BOIDS)]
+boids_y = [random.uniform(INIT_CONFIG["y_min"], INIT_CONFIG["y_min"]) for x in range(NUM_BOIDS)]
+boid_x_velocities = [random.uniform(INIT_CONFIG["vx_min"], INIT_CONFIG["vx_min"]) for x in range(NUM_BOIDS)]
+boid_y_velocities = [random.uniform(INIT_CONFIG["vy_min"], INIT_CONFIG["vy_min"]) for x in range(NUM_BOIDS)]
 boids = (boids_x, boids_y, boid_x_velocities, boid_y_velocities)
 
 
