@@ -9,13 +9,18 @@ for use as an exercise on refactoring.
 from matplotlib import pyplot as plt
 from matplotlib import animation
 import random
+import os
+import yaml
 
-# Constants
-NUM_BOIDS = 50
-INITIAL_X_MIN, INITIAL_X_MAX = [-450, 50.0]
-INITIAL_Y_MIN, INITIAL_Y_MAX = [300.0, 600.0]
-INITIAL_VX_MIN, INITIAL_VY_MAX = [0, 10.0]
-INITIAL_VY_MIN, INITIAL_VY_MAX = [-20.0, 20.0]
+# Load initial config from initial_config.yml
+INITIAL_CONFIG = yaml.load(open(os.path.join(os.path.dirname(__file__), 'initial_config.yml')))
+
+NUM_BOIDS = INITIAL_CONFIG["num_boids"]
+
+INITIAL_X_MIN, INITIAL_X_MAX = INITIAL_CONFIG["initial_x_min"], INITIAL_CONFIG["initial_x_min"]
+INITIAL_Y_MIN, INITIAL_Y_MAX = INITIAL_CONFIG["initial_y_min"], INITIAL_CONFIG["initial_y_min"]
+INITIAL_VX_MIN, INITIAL_VY_MAX = INITIAL_CONFIG["initial_vx_min"], INITIAL_CONFIG["initial_vx_min"]
+INITIAL_VY_MIN, INITIAL_VY_MAX = INITIAL_CONFIG["initial_vy_min"], INITIAL_CONFIG["initial_vy_min"]
 
 # Construct boids as a array of arrays
 boids_x = [random.uniform(INITIAL_X_MIN, INITIAL_X_MAX) for x in range(NUM_BOIDS)]
