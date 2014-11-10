@@ -1,0 +1,12 @@
+num_boids: 50
+
+
+initial_x_min: -450.0
+initial_x_max: 50.0
+initial_y_min: 300.0
+initial_y_max: 600.0
+initial_vx_min: 0.0
+initial_vx_max: 10.0
+initial_vy_min: -20
+initial_vy_max: 20
+
