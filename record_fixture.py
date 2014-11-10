@@ -1,4 +1,4 @@
-#File to create regression test data
+# File to create regression test data
 
 import yaml
 import boids
@@ -14,7 +14,7 @@ boids.update_boids(boids.boids)
 after = boids.boids
 
 # Create a yaml file of with the before and after state
-fixture = {"before":before,"after":after}
-fixture_file = open("fixture.yml",'w')
+fixture = {"before": before, "after": after}
+fixture_file = open("fixture.yml", 'w')
 fixture_file.write(yaml.dump(fixture))
 fixture_file.close()
