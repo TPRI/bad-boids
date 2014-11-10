@@ -1,0 +1,12 @@
+TODO
+
+TODO: Ensure regression test test_boids is working
+TODO: Make the code PEP8 compliant
+TODO: Replace the magic numbers with constants
+TODO: Replace the constants with a configuration file
+TODO: Convert the update_boids module in to a boids class
+TODO: boids: Break the update_boids into modules
+TODO: boids: Convert loops into iterators
+TODO: Convert the plot code into a module and then a class
+TODO: Ensure code is well commented
+TODO: Ensure code is documented
