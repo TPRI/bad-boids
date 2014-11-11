@@ -31,8 +31,6 @@ class Boids(object):
                            random.uniform(config['vx_min'], config['vx_max']),
                            random.uniform(config['vy_min'], config['vy_max'])) for x in range(self.num_boids)]
 
-        print self.boids[1].x
-
     # Fly towards the middle
     def fly_mid(self):
         for boid_i in self.boids:
@@ -85,5 +83,3 @@ class Boids(object):
         self.fly_speed_match()
         # Move according to velocities
         self.move()
-
-my_boids = Boids()
