@@ -7,12 +7,13 @@ my_boids = Boids()
 # Create a plot figure
 figure = plt.figure()
 axes = plt.axes(xlim=(-500, 1500), ylim=(-500, 1500))
-scatter = axes.scatter(my_boids.get_x_coordinates(), my_boids.get_y_coordinates())
+scatter = axes.scatter(my_boids.get_boids()[0], my_boids.get_boids()[1])
+
 
 # A function to run the simulation and update the plot
 def animate(frame):
     my_boids.update_boids()
-    scatter.set_offsets(zip(my_boids.get_x_coordinates(), my_boids.get_y_coordinates()))
+    scatter.set_offsets(zip(my_boids.get_boids()[0], my_boids.get_boids()[1]))
 
 # Animate the plot
 anim = animation.FuncAnimation(figure, animate,

@@ -4,7 +4,6 @@ import os
 import yaml
 
 
-
 # A regression test to check the model behaves as it did previously
 def test_bad_boids_regression():
 
@@ -22,7 +21,7 @@ def test_bad_boids_regression():
     # Run the model
     my_boids.update_boids()
 
-    boid_data  = [my_boids.get_x_coordinates(), my_boids.get_y_coordinates(), my_boids.get_vx_coordinates(), my_boids.get_vy_coordinates()]
+    boid_data = my_boids.get_boids()
 
     print regression_data["after"]
     print boid_data

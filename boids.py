@@ -54,28 +54,6 @@ class Boids(object):
         for boid_i in self.boids:
             boid_i.move()
 
-    def set_boids(self, data):
-        self.boids = [Boid(data[0][i],
-                           data[1][i],
-                           data[2][i],
-                           data[3][i],) for i in range(self.num_boids)]
-
-    # Temp: get x coordinates
-    def get_x_coordinates(self):
-        return [self.boids[i].x for i in range(self.num_boids)]
-
-    # Temp: get y coordinates
-    def get_y_coordinates(self):
-        return [self.boids[i].y for i in range(self.num_boids)]
-
-    # Temp: get vx coordinates
-    def get_vx_coordinates(self):
-        return [self.boids[i].vx for i in range(self.num_boids)]
-
-    # Temp: get vy coordinates
-    def get_vy_coordinates(self):
-        return [self.boids[i].vy for i in range(self.num_boids)]
-
     # The main simulation
     def update_boids(self):
 
@@ -87,3 +65,15 @@ class Boids(object):
         self.fly_speed_match()
         # Move according to velocities
         self.move()
+
+    def set_boids(self, data):
+        self.boids = [Boid(data[0][i],
+                           data[1][i],
+                           data[2][i],
+                           data[3][i],) for i in range(self.num_boids)]
+
+    def get_boids(self):
+        return zip(*[[self.boids[i].x,
+                     self.boids[i].y,
+                     self.boids[i].vx,
+                     self.boids[i].vy] for i in range(self.num_boids)])
