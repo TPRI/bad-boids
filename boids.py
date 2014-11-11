@@ -9,6 +9,7 @@ for use as an exercise on refactoring.
 import random
 import os
 import yaml
+from boid import Boid
 
 
 class Boids(object):
@@ -16,57 +17,51 @@ class Boids(object):
     def __init__(self):
         
         # Load initial config from initial_config.yml
-        INIT_CONFIG = yaml.load(open(os.path.join(os.path.dirname(__file__), 'initial_config.yml')))
+        config = yaml.load(open(os.path.join(os.path.dirname(__file__), 'initial_config.yml')))
         
-        self.num_boids = INIT_CONFIG["num_boids"]
-        self.fly_mid_scale = INIT_CONFIG["fly_mid_scale"]
-        self.fly_away_condition = INIT_CONFIG["fly_away_condition"]
-        self.speed_match_condition = INIT_CONFIG["speed_match_condition"]
-        self.speed_match_scale = INIT_CONFIG["speed_match_scale"]
+        self.num_boids = config["num_boids"]
+        self.fly_mid_scale = config["fly_mid_scale"]
+        self.fly_away_condition = config["fly_away_condition"]
+        self.speed_match_condition = config["speed_match_condition"]
+        self.speed_match_scale = config["speed_match_scale"]
 
         # Construct boids as a array of arrays
-        self.boids = [{'boid_label': x,
-                       'x': random.uniform(INIT_CONFIG['x_min'], INIT_CONFIG['x_max']),
-                       'y': random.uniform(INIT_CONFIG['y_min'], INIT_CONFIG['y_max']),
-                       'vx': random.uniform(INIT_CONFIG['vx_min'], INIT_CONFIG['vx_max']),
-                       'vy': random.uniform(INIT_CONFIG['vy_min'], INIT_CONFIG['vy_max'])} for x in range(self.num_boids)]
+        self.boids = [Boid(random.uniform(config['x_min'], config['x_max']),
+                           random.uniform(config['y_min'], config['y_max']),
+                           random.uniform(config['vx_min'], config['vx_max']),
+                           random.uniform(config['vy_min'], config['vy_max'])) for x in range(self.num_boids)]
 
+        print self.boids[1].x
 
     # Fly towards the middle
     def fly_mid(self):
-        for i in range(self.num_boids):
-            for j in range(self.num_boids):
-                self.boids[i]['vx'] += (self.boids[j]['x'] - self.boids[i]['x']) * self.fly_mid_scale / self.num_boids
-                self.boids[i]['vy'] += (self.boids[j]['y'] - self.boids[i]['y']) * self.fly_mid_scale / self.num_boids
+        for boid_i in self.boids:
+            for boid_j in self.boids:
+                boid_i.fly_mid(boid_j)
 
     # Fly away from nearby boids
     def fly_away(self):
-        for i in range(self.num_boids):
-            for j in range(self.num_boids):
-                if (self.boids[j]['x'] - self.boids[i]['x']) ** 2 + (self.boids[j]['y'] - self.boids[i]['y']) ** 2 < self.fly_away_condition:
-                    self.boids[i]['vx'] += (self.boids[i]['x'] - self.boids[j]['x'])
-                    self.boids[i]['vy'] += (self.boids[i]['y'] - self.boids[j]['y'])
+        for boid_i in self.boids:
+            for boid_j in self.boids:
+                boid_i.fly_away(boid_j)
 
     # Try to match speed with nearby boids
     def fly_speed_match(self):
-        for i in range(self.num_boids):
-            for j in range(self.num_boids):
-                if (self.boids[j]['x'] - self.boids[i]['x']) ** 2 + (self.boids[j]['y'] - self.boids[i]['y']) ** 2 < self.speed_match_condition:
-                    self.boids[i]['vx'] += (self.boids[j]['vx'] - self.boids[i]['vx']) * self.speed_match_scale / self.num_boids
-                    self.boids[i]['vy'] += (self.boids[j]['vy'] - self.boids[i]['vy']) * self.speed_match_scale / self.num_boids
+        for boid_i in self.boids:
+            for boid_j in self.boids:
+                boid_i.fly_speed_match(boid_j)
 
     # Move according to velocities
     def move(self):
-        for i in range(self.num_boids):
-            self.boids[i]['x'] = self.boids[i]['x'] + self.boids[i]['vx']
-            self.boids[i]['y'] = self.boids[i]['y'] + self.boids[i]['vy']
+        for boid_i in self.boids:
+            boid_i.move()
 
     # Temp: get x coordinates
     def get_x_coordinates(self):
 
         x_array = []
         for i in range(self.num_boids):
-            x_array.append(self.boids[i]['x'])
+            x_array.append(self.boids[i].x)
 
         return x_array
 
@@ -75,7 +70,7 @@ class Boids(object):
 
         y_array = []
         for i in range(self.num_boids):
-            y_array.append(self.boids[i]['y'])
+            y_array.append(self.boids[i].y)
 
         return y_array
 
@@ -90,3 +85,5 @@ class Boids(object):
         self.fly_speed_match()
         # Move according to velocities
         self.move()
+
+my_boids = Boids()
