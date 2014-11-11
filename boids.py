@@ -59,10 +59,13 @@ class Boids(object):
 
         # Fly towards the middle
         self.fly_mid()
+
         # Fly away from nearby boids
         self.fly_away()
+
         # Try to match speed with nearby boids
         self.fly_speed_match()
+
         # Move according to velocities
         self.move()
 

@@ -28,15 +28,20 @@ class Boid(object):
 
     # Fly away from nearby boids
     def fly_away(self, boid):
-        if (boid.x - self.x) ** 2 + (boid.y - self.y) ** 2 < self.fly_away_condition:
+        if self.distance(boid) < self.fly_away_condition:
             self.vx += (self.x - boid.x)
             self.vy += (self.y - boid.y)
 
     # Try to match speed with nearby boids
     def fly_speed_match(self, boid):
-        if (boid.x - self.x) ** 2 + (boid.y - self.y) ** 2 < self.speed_match_condition:
+        if self.distance(boid) < self.speed_match_condition:
             self.vx += (boid.vx - self.vx) * self.speed_match_scale / self.num_boids
             self.vy += (boid.vy - self.vy) * self.speed_match_scale / self.num_boids
+
+    # Measure the distance squared between boids
+    def distance(self, boid):
+        dist = (boid.x - self.x) ** 2 + (boid.y - self.y) ** 2
+        return dist
 
     # Move according to velocities
     def move(self):
