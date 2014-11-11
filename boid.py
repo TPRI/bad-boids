@@ -3,6 +3,7 @@ import yaml
 
 
 class Boid(object):
+    """ Describes a single boid and its individual behaviour that causes it to flock with nearby boids"""
 
     def __init__(self, x, y, vx, vy):
 

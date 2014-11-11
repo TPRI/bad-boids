@@ -1,3 +1,11 @@
+"""
+An exercise in refactoring.
+
+This code has been modified from a deliberately bad implementation of
+[Boids](http://dl.acm.org/citation.cfm?doid=37401.37406)
+for use as an exercise on refactoring.
+"""
+
 from boids import Boids
 from matplotlib import pyplot as plt
 from matplotlib import animation

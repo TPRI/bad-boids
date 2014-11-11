@@ -1,6 +1,9 @@
+# Plot config options for run_boids.py
+
 xlim_max: 1500
 xlim_min: -500
 ylim_max: 1500
 ylim_min: -500
+
 frames: 50
 interval: 50
