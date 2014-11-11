@@ -31,6 +31,13 @@ class Boids(object):
                        'vx': random.uniform(INIT_CONFIG['vx_min'], INIT_CONFIG['vx_max']),
                        'vy': random.uniform(INIT_CONFIG['vy_min'], INIT_CONFIG['vy_max'])} for x in range(self.num_boids)]
 
+        x_array = []
+        for i in range(self.num_boids):
+            x_array.append(self.boids[i]['x'])
+
+        print x_array
+
+
     # Fly towards the middle
     def fly_mid(self):
         for i in range(self.num_boids):
@@ -59,6 +66,24 @@ class Boids(object):
         for i in range(self.num_boids):
             self.boids[i]['x'] = self.boids[i]['x'] + self.boids[i]['vx']
             self.boids[i]['y'] = self.boids[i]['y'] + self.boids[i]['vy']
+
+    # Temp: get x coordinates
+    def get_x_coordinates(self):
+
+        x_array = []
+        for i in range(self.num_boids):
+            x_array.append(self.boids[i]['x'])
+
+        return x_array
+
+    # Temp: get y coordinates
+    def get_y_coordinates(self):
+
+        y_array = []
+        for i in range(self.num_boids):
+            y_array.append(self.boids[i]['y'])
+
+        return y_array
 
     # The main simulation
     def update_boids(self):
