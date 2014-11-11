@@ -23,53 +23,51 @@ class Boids(object):
         self.fly_away_condition = INIT_CONFIG["fly_away_condition"]
         self.speed_match_condition = INIT_CONFIG["speed_match_condition"]
         self.speed_match_scale = INIT_CONFIG["speed_match_scale"]
-        
+
         # Construct boids as a array of arrays
-        boids_x = [random.uniform(INIT_CONFIG["x_min"], INIT_CONFIG["x_max"]) for x in range(self.num_boids)]
-        boids_y = [random.uniform(INIT_CONFIG["y_min"], INIT_CONFIG["y_max"]) for x in range(self.num_boids)]
-        boid_x_velocities = [random.uniform(INIT_CONFIG["vx_min"], INIT_CONFIG["vx_max"]) for x in range(self.num_boids)]
-        boid_y_velocities = [random.uniform(INIT_CONFIG["vy_min"], INIT_CONFIG["vy_max"]) for x in range(self.num_boids)]
-        self.boids = (boids_x, boids_y, boid_x_velocities, boid_y_velocities)
+        self.boids = [{'boid_label': x,
+                       'x': random.uniform(INIT_CONFIG['x_min'], INIT_CONFIG['x_max']),
+                       'y': random.uniform(INIT_CONFIG['y_min'], INIT_CONFIG['y_max']),
+                       'vx': random.uniform(INIT_CONFIG['vx_min'], INIT_CONFIG['vx_max']),
+                       'vy': random.uniform(INIT_CONFIG['vy_min'], INIT_CONFIG['vy_max'])} for x in range(self.num_boids)]
 
     # Fly towards the middle
-    def fly_mid(self, xs, xvs, ys, yvs):
+    def fly_mid(self):
         for i in range(self.num_boids):
             for j in range(self.num_boids):
-                xvs[i] += (xs[j] - xs[i]) * self.fly_mid_scale / self.num_boids
-                yvs[i] += (ys[j] - ys[i]) * self.fly_mid_scale / self.num_boids
+                self.boids[i]['vx'] += (self.boids[i]['x'] - self.boids[i]['x']) * self.fly_mid_scale / self.num_boids
+                self.boids[i]['vy'] += (self.boids[j]['y'] - self.boids[i]['y']) * self.fly_mid_scale / self.num_boids
+
     # Fly away from nearby boids
-    def fly_away(self, xs, xvs, ys, yvs):
+    def fly_away(self):
         for i in range(self.num_boids):
             for j in range(self.num_boids):
-                if (xs[j] - xs[i]) ** 2 + (ys[j] - ys[i]) ** 2 < self.fly_away_condition:
-                    xvs[i] = xvs[i] + (xs[i] - xs[j])
-                    yvs[i] = yvs[i] + (ys[i] - ys[j])
+                if (self.boids[i]['x'] - self.boids[i]['x']) ** 2 + (self.boids[j]['y'] - self.boids[i]['y']) ** 2 < self.fly_away_condition:
+                    self.boids[i]['vx'] = self.boids[i]['vx'] + (self.boids[i]['x'] - self.boids[i]['x'])
+                    self.boids[i]['vy'] = self.boids[i]['vy'] + (self.boids[i]['y'] - self.boids[j]['y'])
 
     # Try to match speed with nearby boids
-    def fly_speed_match(self, xs, xvs, ys, yvs):
+    def fly_speed_match(self):
         for i in range(self.num_boids):
             for j in range(self.num_boids):
-                if (xs[j] - xs[i]) ** 2 + (ys[j] - ys[i]) ** 2 < self.speed_match_condition:
-                    xvs[i] += (xvs[j] - xvs[i]) * self.speed_match_scale / self.num_boids
-                    yvs[i] += (yvs[j] - yvs[i]) * self.speed_match_scale / self.num_boids
+                if (self.boids[i]['x'] - self.boids[i]['x']) ** 2 + (self.boids[j]['y'] - self.boids[i]['y']) ** 2 < self.speed_match_condition:
+                    self.boids[i]['vx'] += (self.boids[j]['vx'] - self.boids[i]['vx']) * self.speed_match_scale / self.num_boids
+                    self.boids[i]['vy'] += (self.boids[j]['vy'] - self.boids[i]['vy']) * self.speed_match_scale / self.num_boids
 
     # Move according to velocities
-    def move(self, xs, xvs, ys, yvs):
+    def move(self):
         for i in range(self.num_boids):
-            xs[i] = xs[i] + xvs[i]
-            ys[i] = ys[i] + yvs[i]
+            self.boids[i]['x'] = self.boids[i]['x'] + self.boids[i]['vx']
+            self.boids[i]['y'] = self.boids[i]['y'] + self.boids[i]['vy']
 
     # The main simulation
     def update_boids(self):
-    
-        xs, ys, xvs, yvs = self.boids
-    
-        # Fly towards the middle
-        self.fly_mid(xs, xvs, ys, yvs)
-        # Fly away from nearby boids
-        self.fly_away(xs, xvs, ys, yvs)
-        # Try to match speed with nearby boids
-        self.fly_speed_match(xs, xvs, ys, yvs)
-        # Move according to velocities
-        self.move(xs, xvs, ys, yvs)
 
+        # Fly towards the middle
+        self.fly_mid()
+        # Fly away from nearby boids
+        self.fly_away()
+        # Try to match speed with nearby boids
+        self.fly_speed_match()
+        # Move according to velocities
+        self.move()
