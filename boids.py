@@ -56,21 +56,11 @@ class Boids(object):
 
     # Temp: get x coordinates
     def get_x_coordinates(self):
-
-        x_array = []
-        for i in range(self.num_boids):
-            x_array.append(self.boids[i].x)
-
-        return x_array
+        return [self.boids[i].x for i in range(self.num_boids)]
 
     # Temp: get y coordinates
     def get_y_coordinates(self):
-
-        y_array = []
-        for i in range(self.num_boids):
-            y_array.append(self.boids[i].y)
-
-        return y_array
+        return [self.boids[i].y for i in range(self.num_boids)]
 
     # The main simulation
     def update_boids(self):
