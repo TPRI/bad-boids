@@ -40,8 +40,6 @@ class Boids(object):
         for i in range(self.num_boids):
             for j in range(self.num_boids):
                 xvs[i] += (xs[j] - xs[i]) * self.fly_mid_scale / self.num_boids
-        for i in range(self.num_boids):
-            for j in range(self.num_boids):
                 yvs[i] += (ys[j] - ys[i]) * self.fly_mid_scale / self.num_boids
     
         # Fly away from nearby boids
