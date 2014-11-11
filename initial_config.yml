@@ -1,4 +1,8 @@
 num_boids: 50
+fly_mid_scale: 0.01
+fly_away_condition: 100
+speed_match_condition: 10000
+speed_match_scale: 0.125
 
 # Initial Parameters
 x_min: -450.0

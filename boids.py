@@ -10,6 +10,7 @@ import random
 import os
 import yaml
 
+
 class Boids(object):
     
     def __init__(self):
@@ -18,6 +19,10 @@ class Boids(object):
         INIT_CONFIG = yaml.load(open(os.path.join(os.path.dirname(__file__), 'initial_config.yml')))
         
         self.num_boids = INIT_CONFIG["num_boids"]
+        self.fly_mid_scale = INIT_CONFIG["fly_mid_scale"]
+        self.fly_away_condition = INIT_CONFIG["fly_away_condition"]
+        self.speed_match_condition = INIT_CONFIG["speed_match_condition"]
+        self.speed_match_scale = INIT_CONFIG["speed_match_scale"]
         
         # Construct boids as a array of arrays
         boids_x = [random.uniform(INIT_CONFIG["x_min"], INIT_CONFIG["x_max"]) for x in range(self.num_boids)]
@@ -34,24 +39,24 @@ class Boids(object):
         # Fly towards the middle
         for i in range(self.num_boids):
             for j in range(self.num_boids):
-                xvs[i] += (xs[j] - xs[i]) * 0.01 / self.num_boids
+                xvs[i] += (xs[j] - xs[i]) * self.fly_mid_scale / self.num_boids
         for i in range(self.num_boids):
             for j in range(self.num_boids):
-                yvs[i] += (ys[j] - ys[i]) * 0.01 / self.num_boids
+                yvs[i] += (ys[j] - ys[i]) * self.fly_mid_scale / self.num_boids
     
         # Fly away from nearby boids
         for i in range(self.num_boids):
             for j in range(self.num_boids):
-                if (xs[j] - xs[i]) ** 2 + (ys[j] - ys[i]) ** 2 < 100:
+                if (xs[j] - xs[i]) ** 2 + (ys[j] - ys[i]) ** 2 < self.fly_away_condition:
                     xvs[i] = xvs[i] + (xs[i] - xs[j])
                     yvs[i] = yvs[i] + (ys[i] - ys[j])
     
         # Try to match speed with nearby boids
         for i in range(self.num_boids):
             for j in range(self.num_boids):
-                if (xs[j] - xs[i]) ** 2 + (ys[j] - ys[i]) ** 2 < 10000:
-                    xvs[i] += (xvs[j] - xvs[i]) * 0.125 / self.num_boids
-                    yvs[i] += (yvs[j] - yvs[i]) * 0.125 / self.num_boids
+                if (xs[j] - xs[i]) ** 2 + (ys[j] - ys[i]) ** 2 < self.speed_match_condition:
+                    xvs[i] += (xvs[j] - xvs[i]) * self.speed_match_scale / self.num_boids
+                    yvs[i] += (yvs[j] - yvs[i]) * self.speed_match_scale / self.num_boids
     
         # Move according to velocities
         for i in range(self.num_boids):
