@@ -9,7 +9,7 @@ for use as an exercise on refactoring.
 import random
 import os
 import yaml
-
+import numpy as np
 
 class Boids(object):
     
@@ -29,6 +29,13 @@ class Boids(object):
         boids_y = [random.uniform(INIT_CONFIG["y_min"], INIT_CONFIG["y_max"]) for x in range(self.num_boids)]
         boid_x_velocities = [random.uniform(INIT_CONFIG["vx_min"], INIT_CONFIG["vx_max"]) for x in range(self.num_boids)]
         boid_y_velocities = [random.uniform(INIT_CONFIG["vy_min"], INIT_CONFIG["vy_max"]) for x in range(self.num_boids)]
+        self.boids = (boids_x, boids_y, boid_x_velocities, boid_y_velocities)
+
+        # Convert to numpy arrays
+        boids_x = np.array(boids_x)
+        boids_y = np.array(boids_y)
+        boid_x_velocities = np.array(boid_x_velocities)
+        boid_y_velocities = np.array(boid_y_velocities)
         self.boids = (boids_x, boids_y, boid_x_velocities, boid_y_velocities)
 
     # Fly towards the middle
