@@ -38,8 +38,13 @@ class Boids(object):
         boid_y_velocities = np.array(boid_y_velocities)
         self.boids = (boids_x, boids_y, boid_x_velocities, boid_y_velocities)
 
-    # Fly
-    def fly(self, xs, xvs, ys, yvs):
+    # The main simulation
+    def update_boids(self):
+
+        xs, ys, xvs, yvs = self.boids
+    
+        # Fly
+        ###########
 
         # differences
         diff_xs = np.subtract.outer(xs, xs)
@@ -78,18 +83,9 @@ class Boids(object):
         xvs += np.sum(combined_xvs, axis=0)
         yvs += np.sum(combined_yvs, axis=0)
 
-    # Move according to velocities
-    def move(self, xs, xvs, ys, yvs):
+        # move
+        #########
+
         xs += xvs
         ys += yvs
-
-    # The main simulation
-    def update_boids(self):
-
-        xs, ys, xvs, yvs = self.boids
-    
-        # Fly
-        self.fly(xs, xvs, ys, yvs)
-        # Move according to velocities
-        self.move(xs, xvs, ys, yvs)
 
