@@ -3,7 +3,7 @@
 import timeit
 import numpy as np
 
-time_boids = timeit.repeat('my_boids.update_boids()', setup='from boids import Boids\nmy_boids = Boids()', repeat=100, number=100)
+time_boids = timeit.repeat('my_boids.update_boids()', setup='from boids import Boids\nmy_boids = Boids()', repeat=20, number=100)
 
 print np.mean(time_boids)
 
