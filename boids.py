@@ -67,19 +67,18 @@ class Boids(object):
         diff_yvs_fly_speed_match_average_combine = diff_yvs_fly_speed_match_average * speed_match_condition_truth
         diff_xvs_fly_away_combine = np.transpose(diff_xs) * fly_away_condition_truth
         diff_yvs_fly_away_combine = np.transpose(diff_ys) * fly_away_condition_truth
-        
+        # TRANSPOSE MAY BE A TYPO?
+
+        # combine all together
+        # Fly towards the middle + Try to match speed with nearby boids + Fly away from nearby boids
+        combined_xvs = diff_xs_fly_mid_scale_avg + diff_xvs_fly_speed_match_average_combine + diff_xvs_fly_away_combine
+        combined_yvs = diff_ys_fly_mid_scale_avg + diff_yvs_fly_speed_match_average_combine + diff_yvs_fly_away_combine
+
 
         for i in range(self.num_boids):
             for j in range(self.num_boids):
-                # Fly towards the middle
-                xvs[i] += diff_xs_fly_mid_scale_avg[j, i]
-                yvs[i] += diff_ys_fly_mid_scale_avg[j, i]
-                # Try to match speed with nearby boids
-                xvs[i] += diff_xvs_fly_speed_match_average_combine[j, i]
-                yvs[i] += diff_yvs_fly_speed_match_average_combine[j, i]
-                # Fly away from nearby boids
-                xvs[i] += diff_xvs_fly_away_combine[j, i]
-                yvs[i] += diff_yvs_fly_away_combine[j, i]
+                xvs[i] += combined_xvs[j, i]
+                yvs[i] += combined_yvs[j, i]
 
     # Move according to velocities
     def move(self, xs, xvs, ys, yvs):
