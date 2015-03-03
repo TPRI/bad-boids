@@ -58,17 +58,21 @@ class Boids(object):
         diff_xvs_fly_speed_match_average = diff_xvs * fly_speed_match_average
         diff_yvs_fly_speed_match_average = diff_yvs * fly_speed_match_average
 
+        # evaluate conditions into truth tables
+        speed_match_condition_truth = np.less(total_diff, self.speed_match_condition)
+        fly_away_condition_truth = np.less(total_diff, self.fly_away_condition)
+
         for i in range(self.num_boids):
             for j in range(self.num_boids):
                 # Fly towards the middle
                 xvs[i] += diff_xs_fly_mid_scale_avg[j, i]
                 yvs[i] += diff_ys_fly_mid_scale_avg[j, i]
                 # Try to match speed with nearby boids
-                if total_diff[j, i] < self.speed_match_condition:
+                if speed_match_condition_truth[j, i]:
                     xvs[i] += diff_xvs_fly_speed_match_average[j, i]
                     yvs[i] += diff_yvs_fly_speed_match_average[j, i]
                     # Fly away from nearby boids
-                    if total_diff[j, i] < self.fly_away_condition:
+                    if fly_away_condition_truth[j, i]:
                         xvs[i] += diff_xs[i, j]
                         yvs[i] += diff_ys[i, j]
 
