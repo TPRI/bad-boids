@@ -62,9 +62,8 @@ class Boids(object):
 
     # Move according to velocities
     def move(self, xs, xvs, ys, yvs):
-        for i in range(self.num_boids):
-            xs[i] = xs[i] + xvs[i]
-            ys[i] = ys[i] + yvs[i]
+        xs += xvs
+        ys += yvs
 
     # The main simulation
     def update_boids(self):
