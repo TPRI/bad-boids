@@ -74,11 +74,9 @@ class Boids(object):
         combined_xvs = diff_xs_fly_mid_scale_avg + diff_xvs_fly_speed_match_average_combine + diff_xvs_fly_away_combine
         combined_yvs = diff_ys_fly_mid_scale_avg + diff_yvs_fly_speed_match_average_combine + diff_yvs_fly_away_combine
 
-
-        for i in range(self.num_boids):
-            for j in range(self.num_boids):
-                xvs[i] += combined_xvs[j, i]
-                yvs[i] += combined_yvs[j, i]
+        # Sum over axis 0 and augmented assignment
+        xvs += np.sum(combined_xvs, axis=0)
+        yvs += np.sum(combined_yvs, axis=0)
 
     # Move according to velocities
     def move(self, xs, xvs, ys, yvs):
