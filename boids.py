@@ -3,7 +3,7 @@ An exercise in refactoring.
 
 This code has been modified from a deliberately bad implementation of
 [Boids](http://dl.acm.org/citation.cfm?doid=37401.37406)
-for use as an exercise on refactoring.
+for use as an exercise optimising performance using numpy
 """
 
 import random
