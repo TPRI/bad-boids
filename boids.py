@@ -48,16 +48,19 @@ class Boids(object):
         diff_xvs = np.subtract.outer(xvs, xvs)
         diff_yvs = np.subtract.outer(yvs, yvs)
 
+        fly_mid_scale_avg = self.fly_mid_scale / self.num_boids
+        fly_speed_match_average = self.speed_match_scale / self.num_boids
+
 
         for i in range(self.num_boids):
             for j in range(self.num_boids):
                 # Fly towards the middle
-                xvs[i] += diff_xs[j, i] * self.fly_mid_scale / self.num_boids
-                yvs[i] += diff_ys[j, i] * self.fly_mid_scale / self.num_boids
+                xvs[i] += diff_xs[j, i] * fly_mid_scale_avg
+                yvs[i] += diff_ys[j, i] * fly_mid_scale_avg
                 # Try to match speed with nearby boids
                 if total_diff[j, i] < self.speed_match_condition:
-                    xvs[i] += diff_xvs[j, i] * self.speed_match_scale / self.num_boids
-                    yvs[i] += diff_yvs[j, i] * self.speed_match_scale / self.num_boids
+                    xvs[i] += diff_xvs[j, i] * fly_speed_match_average
+                    yvs[i] += diff_yvs[j, i] * fly_speed_match_average
                     # Fly away from nearby boids
                     if total_diff[j, i] < self.fly_away_condition:
                         xvs[i] += diff_xs[i, j]
